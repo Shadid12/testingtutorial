@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import App from './App';
 
 /**
@@ -13,4 +13,17 @@ test('renders the form correctly', () => {
   expect(ageLabel).toBeInTheDocument();
   const input = getByLabelText(/Age:/i);
   expect(input).toHaveAttribute('type', 'number')
+});
+
+
+test('submit button should be disabled when Name is empty', () => {
+  const { getByLabelText, getByRole, debug } = render(<App />);
+  const input = getByLabelText(/Name:/i);
+  fireEvent.change(input, { 'target': { 'value': '' } });
+  const submitBtn = getByRole('button', { name: 'Submit' });
+  expect(submitBtn).toHaveAttribute('disabled');
+  debug(submitBtn);
+  fireEvent.change(input, { 'target': { 'value': 'John Doe' } });
+  debug(submitBtn);
+  expect(submitBtn).not.toHaveAttribute('disabled');
 });
