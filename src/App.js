@@ -1,24 +1,43 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
+
+  const [state, setState] = React.useState({
+    name: '',
+    age: '',
+  });
+
+  const handleSubmit = e => {
+    e.preventDefault();
+  }
+
+  const updateName = e => {
+    e.preventDefault();
+    setState({...state, name: e.target.value})
+  }
+
+  const updateAge = e => {
+    e.preventDefault();
+    setState({...state, age: e.target.value})
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Welcome {state.name}</h1>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Name:
+          <input type="text" value={state.name} onChange={updateName} />
+        </label>
+        <br />
+        <label>
+          Age:
+          <input type="number" value={state.age} onChange={updateAge} />
+        </label>
+        <br />
+        <input type="submit" value="Submit" disabled={state.name === ''}/>
+      </form>
     </div>
   );
 }

@@ -2,8 +2,15 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+/**
+ * Test What user would see
+ */
+test('renders the form correctly', () => {
+  const { getByText, getByLabelText } = render(<App />);
+  const nameLabel = getByText(/Name:/i);
+  const ageLabel = getByText(/Age:/i);
+  expect(nameLabel).toBeInTheDocument();
+  expect(ageLabel).toBeInTheDocument();
+  const input = getByLabelText(/Age:/i);
+  expect(input).toHaveAttribute('type', 'number')
 });
